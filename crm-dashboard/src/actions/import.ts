@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/db";
-import { normaliseStatus } from "@/lib/csv";
+import { normaliseStatus, fixDoubleEncoding } from "@/lib/csv";
 
 type CsvRow = Record<string, string>;
 
@@ -19,23 +19,26 @@ export async function importDeals(rows: CsvRow[]): Promise<ImportResult> {
         const rawAmount = row["Montant Deal"] ?? row["montant deal"] ?? "0";
         const amount = parseFloat(rawAmount.replace(",", ".")) || 0;
 
+        const rawName    = fixDoubleEncoding(row["Task Name"] ?? "");
+        const rawTagsRaw = fixDoubleEncoding(row["Tags"] ?? "");
+        const rawContent = row["Task Content"] ? fixDoubleEncoding(row["Task Content"]) : null;
+
         const deal = await tx.deal.create({
           data: {
-            name: row["Task Name"] ?? "",
+            name: rawName,
             status: normaliseStatus(row["Status"] ?? ""),
             dateCreated: parseDate(row["Date Created"]),
             dueDate: parseDate(row["Due Date"]),
             startDate: parseDate(row["Start Date"]),
             assignee: row["Assignees"] ?? "",
             priority: (row["Priority"] ?? "").trim().toLowerCase(),
-            tagsRaw: row["Tags"] ?? "",
-            content: row["Task Content"] ?? null,
+            tagsRaw: rawTagsRaw,
+            content: rawContent,
             amount,
           },
         });
 
-        const tagsRaw = row["Tags"] ?? "";
-        const tags = tagsRaw
+        const tags = rawTagsRaw
           .split("|")
           .map((t) => t.trim())
           .filter(Boolean);
@@ -57,6 +60,12 @@ export async function importDeals(rows: CsvRow[]): Promise<ImportResult> {
 
 function parseDate(value: string | undefined): Date | null {
   if (!value?.trim()) return null;
+  const dmyMatch = value.trim().match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  if (dmyMatch) {
+    const [, day, month, year] = dmyMatch;
+    const d = new Date(`${year}-${month}-${day}`);
+    return isNaN(d.getTime()) ? null : d;
+  }
   const d = new Date(value.trim());
   return isNaN(d.getTime()) ? null : d;
 }

@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
+
+model Deal {
+  id          String    @id @default(cuid())
+  name        String
+  status      String
+  dateCreated DateTime?
+  dueDate     DateTime?
+  startDate   DateTime?
+  assignee    String
+  priority    String
+  tagsRaw     String
+  content     String?
+  amount      Float
+  importedAt  DateTime  @default(now())
+
+  tags DealTag[]
+}
+
+model DealTag {
+  id     String @id @default(cuid())
+  dealId String
+  tag    String
+
+  deal Deal @relation(fields: [dealId], references: [id], onDelete: Cascade)
+
+  @@index([tag])
+  @@index([dealId])
+}

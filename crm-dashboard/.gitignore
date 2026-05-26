@@ -38,3 +38,5 @@ next-env.d.ts
 prisma/crm.db
 
 /src/generated/prisma
+.env*
+.env.local

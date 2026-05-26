@@ -4,26 +4,37 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* shadcn tokens — warm palette */
+    --background: 44 20% 97%;
+    --foreground: 20 8% 10%;
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 20 8% 10%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-    --radius: 0.5rem;
+    --popover-foreground: 20 8% 10%;
+    --primary: 21 75% 44%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 44 15% 93%;
+    --secondary-foreground: 20 8% 10%;
+    --muted: 44 12% 93%;
+    --muted-foreground: 20 5% 47%;
+    --accent: 44 12% 93%;
+    --accent-foreground: 20 8% 10%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 36 18% 88%;
+    --input: 36 18% 88%;
+    --ring: 21 75% 44%;
+    --radius: 0.375rem;
+
+    /* Brand tokens */
+    --accent-orange: #C8541A;
+    --accent-green: #166534;
+    --accent-amber: #92400E;
+    --accent-blue: #1D4ED8;
+    --sidebar-bg: #0F0E0B;
+    --sidebar-hover: #1C1B17;
+    --sidebar-active: #262418;
+    --sidebar-border: rgba(255,255,255,0.06);
   }
 }
 
@@ -31,14 +42,50 @@
   * {
     @apply border-border;
   }
+
   body {
-    @apply bg-background text-foreground;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-sans), sans-serif;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+
+  /* Smooth number rendering for mono data */
+  .font-mono {
+    font-family: var(--font-mono), monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .font-syne {
+    font-family: var(--font-syne), sans-serif;
   }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  /* KPI card left-border accent */
+  .kpi-border-orange  { border-left: 3px solid #C8541A; }
+  .kpi-border-blue    { border-left: 3px solid #1D4ED8; }
+  .kpi-border-emerald { border-left: 3px solid #059669; }
+  .kpi-border-violet  { border-left: 3px solid #7C3AED; }
+  .kpi-border-sky     { border-left: 3px solid #0284C7; }
+
+  /* Sidebar active indicator */
+  .nav-active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 4px;
+    bottom: 4px;
+    width: 3px;
+    background: #C8541A;
+    border-radius: 0 2px 2px 0;
+  }
+
+  /* Table row hover */
+  .data-row:hover {
+    background-color: hsl(44 15% 96%);
   }
 }

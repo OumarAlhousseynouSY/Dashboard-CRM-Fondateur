@@ -1,10 +1,9 @@
 export function decodeBuffer(buffer: ArrayBuffer): string {
+  // Try strict UTF-8 first (throws on invalid sequences); fall back to Latin-1
   try {
-    // iconv-lite is a Node.js module; in browser use native TextDecoder
-    const decoder = new TextDecoder("iso-8859-1");
-    return decoder.decode(buffer);
+    return new TextDecoder("utf-8", { fatal: true }).decode(buffer);
   } catch {
-    return new TextDecoder("utf-8").decode(buffer);
+    return new TextDecoder("iso-8859-1").decode(buffer);
   }
 }
 

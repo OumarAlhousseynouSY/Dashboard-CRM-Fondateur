@@ -1,0 +1,26 @@
+Task Name;Status;Date Created;Due Date;Start Date;Assignees;Priority;Tags;Task Content;Montant Deal
+Sophie Martin - TechStart;prospect;2025-01-15;2025-01-25;2025-01-20;Alexandre Dubois;high;SaaS|B2B;Recherche solution CRM cloud pour Ã©quipe de 15 personnes. Budget annuel estimÃ©.;8500
+Pierre Durand - EcoGreen;qualifiÃ©;2025-01-18;2025-02-01;2025-01-28;Marie Laurent;medium;Environnement|PME;IntÃ©ressÃ© par automatisation marketing. Rendez-vous prÃ©vu pour dÃ©mo produit.;12000
+Camille Rousseau - FitLife;nÃ©gociation;2025-01-10;2025-01-30;;Alexandre Dubois;high;Sport|Fitness;Salon de fitness cherche systÃ¨me de gestion membres. Proposition envoyÃ©e le 20/01.;25000
+Laurent Petit - MediaPlus;gagnÃ© - en cours;2025-01-05;;;Marie Laurent;high;Marketing|Agence;Agence mÃ©dia signÃ©e pour solution analytics. ImplÃ©mentation en cours.;18500
+Julie Bernard - ArtSpace;gagnÃ© - en cours;2024-12-20;;;Alexandre Dubois;medium;Culture|Galerie;Galerie d'art pour gestion inventaire et ventes. Projet livrÃ©, formation prÃ©vue.;7800
+Thomas Lambert - AutoPro;prospect;2025-01-22;2025-02-05;2025-02-01;Marie Laurent;low;Automobile|B2C;Garage automobile, demande devis pour systÃ¨me gestion clients et rendez-vous.;6500
+Emma Moreau - BioNutrition;qualifiÃ©;2025-01-12;2025-01-28;2025-01-25;Alexandre Dubois;high;SantÃ©|E-commerce;E-commerce nutrition bio. Besoin intÃ©gration CRM avec plateforme vente.;15000
+Lucas Fontaine - DesignLab;nÃ©gociation;2025-01-08;2025-02-10;;Marie Laurent;medium;Design|CrÃ©atif;Studio design cherche outil gestion projets clients. En attente retour budget.;9200
+ChloÃ© Girard - LegalTech;Ã  relancer;2025-01-19;2025-02-15;;Alexandre Dubois;low;Juridique|SaaS;Cabinet avocat intÃ©ressÃ© mais budget Ã  valider fin trimestre. Relance prÃ©vue.;22000
+Alexandre Simon - FoodDelivery;prospect;2025-01-25;2025-02-08;2025-02-03;Marie Laurent;medium;Restauration|Livraison;Startup livraison repas. Premier contact, besoin solution gestion livreurs.;11500
+LÃ©a Dupont - CoachPro;qualifiÃ©;2025-01-14;2025-01-29;2025-01-27;Alexandre Dubois;high;Formation|Coaching;Coach professionnel, cherche plateforme gestion clients et sessions.;5800
+Nicolas Mercier - TravelWorld;nÃ©gociation;2025-01-06;2025-02-12;;Marie Laurent;high;Tourisme|Agence;Agence voyage pour CRM voyage sur mesure. Proposition technique validÃ©e.;28000
+OcÃ©ane Blanc - BeautyBox;gagnÃ© - en cours;2024-12-28;;;Alexandre Dubois;medium;BeautÃ©|Retail;Institut beautÃ©, solution rÃ©servation en ligne dÃ©ployÃ©e. Suivi mensuel.;4200
+Hugo Roux - BuildSmart;prospect;2025-01-21;2025-02-06;2025-02-02;Marie Laurent;medium;Construction|BTP;Entreprise BTP recherche gestion chantiers et facturation. DÃ©couverte prÃ©vue.;16500
+Manon Garnier - EventsPro;qualifiÃ©;2025-01-16;2025-02-03;2025-01-30;Alexandre Dubois;high;Ã‰vÃ©nementiel|B2B;Organisateur Ã©vÃ©nements pro. Besoin CRM pour gestion participants et sponsors.;19000
+Julien Fournier - PharmaCare;nÃ©gociation;2025-01-11;2025-02-14;;Marie Laurent;high;Pharmacie|SantÃ©;RÃ©seau pharmacies pour systÃ¨me gestion stocks et commandes. NÃ©gociation prix.;32000
+Sarah Bonnet - PetCare;Ã  relancer;2025-01-23;2025-02-20;;Alexandre Dubois;low;Animaux|Services;VÃ©tÃ©rinaire cherche logiciel gestion clients et rendez-vous. Pas de rÃ©ponse.;7200
+Antoine Gauthier - SmartHome;prospect;2025-01-20;2025-02-07;2025-02-04;Marie Laurent;medium;Domotique|Tech;Installation domotique, demande info pour CRM chantiers rÃ©sidentiels.;13500
+InÃ¨s Martinez - LinguaTech;qualifiÃ©;2025-01-13;2025-02-01;2025-01-29;Alexandre Dubois;high;Ã‰ducation|Langues;Ã‰cole langues en ligne. Besoin plateforme gestion Ã©tudiants et cours.;10500
+Maxime Roussel - GreenEnergy;gagnÃ© - en cours;2024-12-15;;;Marie Laurent;high;Ã‰nergie|Renouvelable;Installation panneaux solaires. Solution CRM dÃ©ployÃ©e pour suivi prospects.;21000
+Clara Morel - FashionHub;prospect;2025-01-24;2025-02-09;2025-02-05;Alexandre Dubois;low;Mode|E-commerce;Boutique mode en ligne. Recherche intÃ©gration CRM avec Shopify.;8800
+RaphaÃ«l Leroy - DataInsight;nÃ©gociation;2025-01-09;2025-02-13;;Marie Laurent;high;Data|Analytics;Cabinet conseil data. Proposition pour dashboard analytics clients.;24500
+ZoÃ© Vincent - WellBeing;qualifiÃ©;2025-01-17;2025-02-02;2025-01-31;Alexandre Dubois;medium;Bien-Ãªtre|Spa;Centre bien-Ãªtre cherche solution rÃ©servations et fidÃ©litÃ©. DÃ©mo effectuÃ©e.;6900
+Gabriel Perrin - FinancePro;Ã  relancer;2025-01-26;2025-02-18;;Marie Laurent;low;Finance|Conseil;Conseiller financier intÃ©ressÃ© par CRM clients. Report rÃ©union Ã  fÃ©vrier.;14200
+LÃ©na Morin - KidsClub;prospect;2025-01-27;2025-02-11;2025-02-06;Alexandre Dubois;medium;Enfance|Loisirs;Centre loisirs enfants. Premier contact pour gestion inscriptions et paiements.;5500

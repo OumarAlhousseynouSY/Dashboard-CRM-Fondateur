@@ -1,0 +1,41 @@
+# Environment variables — NEVER commit these
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+build/
+
+# Database
+*.db
+*.db-journal
+*.sqlite
+*.sqlite-journal
+prisma/migrations/*.db
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Misc
+*.pem
+.vercel
+
+# NOTE: .claude/ is intentionally tracked (Claude Code configuration)

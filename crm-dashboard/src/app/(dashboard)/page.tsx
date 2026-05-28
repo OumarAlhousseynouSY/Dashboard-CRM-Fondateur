@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/db";
 import { computeKpis, formatEur } from "@/lib/pipeline";
+import { DashboardCharts } from "@/components/DashboardCharts";
 
 const KPI_CONFIG = [
   {
@@ -40,9 +41,35 @@ const KPI_CONFIG = [
   },
 ];
 
+const STATUS_ORDER = [
+  "prospect",
+  "qualifié",
+  "négociation",
+  "gagné - en cours",
+  "à relancer",
+  "perdu",
+];
+
 export default async function DashboardPage() {
-  const deals = await prisma.deal.findMany();
+  const [deals, statusGroups, sectorGroups] = await Promise.all([
+    prisma.deal.findMany(),
+    prisma.deal.groupBy({ by: ["status"], _count: { id: true } }),
+    prisma.dealTag.groupBy({ by: ["tag"], _count: { dealId: true }, orderBy: { _count: { dealId: "desc" } }, take: 10 }),
+  ]);
+
   const kpis = computeKpis(deals);
+
+  const dealsByStatus = STATUS_ORDER
+    .map((s) => {
+      const found = statusGroups.find((g) => g.status === s);
+      return found ? { label: s, count: found._count.id } : null;
+    })
+    .filter((x): x is { label: string; count: number } => x !== null);
+
+  const dealsBySector = sectorGroups.map((g) => ({
+    label: g.tag.length > 14 ? g.tag.slice(0, 13) + "…" : g.tag,
+    count: g._count.dealId,
+  }));
 
   const pipelineTotal = kpis.caSecurise + kpis.pipelineBrut;
   const caRatio = pipelineTotal > 0 ? (kpis.caSecurise / pipelineTotal) * 100 : 0;
@@ -139,6 +166,9 @@ export default async function DashboardPage() {
           </div>
         </div>
       )}
+
+      {/* Charts */}
+      <DashboardCharts dealsByStatus={dealsByStatus} dealsBySector={dealsBySector} />
 
       {/* À relancer */}
       <div

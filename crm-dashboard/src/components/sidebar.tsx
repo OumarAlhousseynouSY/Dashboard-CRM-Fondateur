@@ -16,6 +16,15 @@ const NAV_ITEMS = [
     ),
   },
   {
+    href: "/deals/new",
+    label: "Nouveau deal",
+    icon: (
+      <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
+        <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+      </svg>
+    ),
+  },
+  {
     href: "/commerciaux",
     label: "Commerciaux",
     icon: (

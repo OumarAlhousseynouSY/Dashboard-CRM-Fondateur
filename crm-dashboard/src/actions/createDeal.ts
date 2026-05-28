@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/db";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 export type CreateDealState = {
   errors?: Partial<Record<"name" | "assignee" | "amount" | "status", string>>;
@@ -71,5 +72,6 @@ export async function createDeal(
     return { globalError: "Erreur lors de la création. Réessayez." };
   }
 
+  revalidatePath("/");
   redirect(`/deals/${dealId}`);
 }

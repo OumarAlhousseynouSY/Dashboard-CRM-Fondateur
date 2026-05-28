@@ -2,6 +2,8 @@ import { prisma } from "@/lib/db";
 import { computeKpis, formatEur } from "@/lib/pipeline";
 import { DashboardCharts } from "@/components/DashboardCharts";
 
+export const dynamic = "force-dynamic";
+
 const KPI_CONFIG = [
   {
     key: "caSecurise" as const,

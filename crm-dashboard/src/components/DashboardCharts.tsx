@@ -11,12 +11,12 @@ import {
 } from "recharts";
 
 const STATUS_COLORS: Record<string, string> = {
-  "prospect": "#0284C7",
-  "qualifié": "#7C3AED",
-  "négociation": "#1D4ED8",
-  "gagné - en cours": "#059669",
-  "à relancer": "#C8541A",
-  "perdu": "#78716C",
+  "prospect":        "#3B82F6",
+  "qualifié":        "#8B5CF6",
+  "négociation":     "#6366F1",
+  "gagné - en cours":"#10B981",
+  "à relancer":      "#E05C1A",
+  "perdu":           "#55557A",
 };
 
 export interface ChartItem {
@@ -24,19 +24,13 @@ export interface ChartItem {
   count: number;
 }
 
-function ChartCard({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
+function ChartCard({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div
-      className="bg-white rounded-lg p-5"
-      style={{ border: "1px solid hsl(36 18% 88%)" }}
+      className="rounded-xl p-5"
+      style={{ background: "var(--bg-card)", border: "1px solid var(--border-card)" }}
     >
-      <p className="font-syne text-[10px] font-semibold tracking-[0.12em] uppercase text-[#9B9085] mb-4">
+      <p className="font-syne text-[10px] font-semibold tracking-[0.12em] uppercase mb-4" style={{ color: "var(--text-muted)" }}>
         {title}
       </p>
       {children}
@@ -55,7 +49,7 @@ function SimpleBarChart({
 }) {
   if (data.length === 0) {
     return (
-      <p className="text-[12px] text-[#9B9085] py-8 text-center">
+      <p className="text-[12px] py-8 text-center font-syne" style={{ color: "var(--text-muted)" }}>
         Aucune donnée disponible.
       </p>
     );
@@ -63,46 +57,39 @@ function SimpleBarChart({
 
   return (
     <ResponsiveContainer width="100%" height={220}>
-      <BarChart
-        data={data}
-        margin={{ top: 4, right: 4, left: -20, bottom: 4 }}
-        barCategoryGap="30%"
-      >
+      <BarChart data={data} margin={{ top: 4, right: 4, left: -20, bottom: 4 }} barCategoryGap="30%">
         <XAxis
           dataKey="label"
-          tick={{ fontSize: 11, fill: "#9B9085" }}
+          tick={{ fontSize: 11, fill: "#55557A" }}
           axisLine={false}
           tickLine={false}
           interval={0}
         />
         <YAxis
           allowDecimals={false}
-          tick={{ fontSize: 11, fill: "#9B9085" }}
+          tick={{ fontSize: 11, fill: "#55557A" }}
           axisLine={false}
           tickLine={false}
           width={28}
         />
         <Tooltip
-          cursor={{ fill: "hsl(44 15% 93%)" }}
+          cursor={{ fill: "rgba(255,255,255,0.03)" }}
           contentStyle={{
-            background: "#fff",
-            border: "1px solid hsl(36 18% 88%)",
-            borderRadius: 6,
+            background: "#13131D",
+            border: "1px solid #22223A",
+            borderRadius: 8,
             fontSize: 12,
-            color: "#1C1917",
+            color: "#E2E2F0",
           }}
           formatter={(value) => [value, "deals"]}
-          labelStyle={{ color: "#6B6560", fontWeight: 600, marginBottom: 2 }}
+          labelStyle={{ color: "#8080A0", fontWeight: 600, marginBottom: 2 }}
         />
-        <Bar dataKey="count" radius={[3, 3, 0, 0]}>
+        <Bar dataKey="count" radius={[4, 4, 0, 0]}>
           {data.map((entry, i) => (
             <Cell
               key={i}
-              fill={
-                useStatusColors
-                  ? (STATUS_COLORS[entry.label] ?? "#9B9085")
-                  : (color ?? "#1D4ED8")
-              }
+              fill={useStatusColors ? (STATUS_COLORS[entry.label] ?? "#55557A") : (color ?? "#3B82F6")}
+              fillOpacity={0.9}
             />
           ))}
         </Bar>
@@ -123,9 +110,8 @@ export function DashboardCharts({
       <ChartCard title="Deals par statut">
         <SimpleBarChart data={dealsByStatus} useStatusColors />
       </ChartCard>
-
       <ChartCard title="Deals par secteur">
-        <SimpleBarChart data={dealsBySector} color="#1D4ED8" />
+        <SimpleBarChart data={dealsBySector} color="#3B82F6" />
       </ChartCard>
     </div>
   );

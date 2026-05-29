@@ -16,7 +16,7 @@ export default async function DashboardLayout({
     <div className="min-h-screen flex">
       <Sidebar email={session.user?.email ?? ""} />
 
-      <main className="flex-1 overflow-auto" style={{ background: "hsl(44 20% 97%)" }}>
+      <main className="flex-1 overflow-auto" style={{ background: "var(--bg-main)" }}>
         <div className="p-6 pt-16 md:pt-6 lg:p-8">{children}</div>
       </main>
 

@@ -29,16 +29,22 @@ export default function LoginPage() {
     }
   }
 
+  const inputStyle = {
+    background: "var(--bg-card)",
+    border: "1px solid var(--border-card)",
+    color: "var(--text-primary)",
+  };
+
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex" style={{ background: "var(--bg-main)" }}>
       {/* Left panel — brand */}
       <div
         className="hidden lg:flex lg:w-[420px] xl:w-[480px] flex-col justify-between p-10 shrink-0"
-        style={{ background: "#0F0E0B" }}
+        style={{ background: "var(--sidebar-bg)", borderRight: "1px solid var(--sidebar-border)" }}
       >
         {/* Logo */}
         <div className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-md bg-[#C8541A] flex items-center justify-center">
+          <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ background: "#E05C1A" }}>
             <svg viewBox="0 0 12 12" fill="white" className="w-4 h-4">
               <path d="M1 9a1 1 0 011-1h1a1 1 0 011 1v1a1 1 0 01-1 1H2a1 1 0 01-1-1V9zM4 6a1 1 0 011-1h1a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V6zM7 3a1 1 0 011-1h1a1 1 0 011 1v7a1 1 0 01-1 1H8a1 1 0 01-1-1V3z" />
             </svg>
@@ -54,12 +60,12 @@ export default function LoginPage() {
           >
             Pilotez votre
             <br />
-            <span style={{ color: "#C8541A" }}>pipeline</span>
+            <span style={{ color: "#E05C1A" }}>pipeline</span>
             <br />
             en temps réel.
           </h1>
-          <p className="text-[#6B6560] font-syne text-[13px] leading-relaxed max-w-xs">
-            Accès réservé. Toutes les données restent locales sur votre machine.
+          <p className="font-syne text-[13px] leading-relaxed max-w-xs" style={{ color: "var(--text-muted)" }}>
+            Accès réservé. Toutes les données restent sécurisées sur votre compte.
           </p>
         </div>
 
@@ -72,7 +78,7 @@ export default function LoginPage() {
           ].map((stat) => (
             <div key={stat.label}>
               <p className="font-mono text-white text-lg font-medium">{stat.value}</p>
-              <p className="font-syne text-[10px] tracking-widest uppercase text-[#4A4540]">
+              <p className="font-syne text-[10px] tracking-widest uppercase" style={{ color: "var(--text-dim)" }}>
                 {stat.label}
               </p>
             </div>
@@ -81,36 +87,30 @@ export default function LoginPage() {
       </div>
 
       {/* Right panel — form */}
-      <div
-        className="flex-1 flex items-center justify-center px-6 py-12"
-        style={{ background: "hsl(44 20% 97%)" }}
-      >
+      <div className="flex-1 flex items-center justify-center px-6 py-12">
         <div className="w-full max-w-sm space-y-8">
           {/* Mobile logo */}
           <div className="lg:hidden flex items-center gap-2.5">
-            <div className="w-6 h-6 rounded bg-[#C8541A] flex items-center justify-center">
+            <div className="w-6 h-6 rounded-md flex items-center justify-center" style={{ background: "#E05C1A" }}>
               <svg viewBox="0 0 12 12" fill="white" className="w-3.5 h-3.5">
                 <path d="M1 9a1 1 0 011-1h1a1 1 0 011 1v1a1 1 0 01-1 1H2a1 1 0 01-1-1V9zM4 6a1 1 0 011-1h1a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V6zM7 3a1 1 0 011-1h1a1 1 0 011 1v7a1 1 0 01-1 1H8a1 1 0 01-1-1V3z" />
               </svg>
             </div>
-            <span className="font-syne font-semibold text-[#1C1917] text-[15px]">CRM Dashboard</span>
+            <span className="font-syne font-semibold text-[15px]" style={{ color: "var(--text-primary)" }}>CRM Dashboard</span>
           </div>
 
           <div>
-            <h2 className="font-syne font-bold text-[22px] text-[#1C1917] tracking-tight">
+            <h2 className="font-syne font-bold text-[22px] tracking-tight" style={{ color: "var(--text-primary)" }}>
               Connexion
             </h2>
-            <p className="font-syne text-[13px] text-[#9B9085] mt-1">
+            <p className="font-syne text-[13px] mt-1" style={{ color: "var(--text-muted)" }}>
               Accès administrateur uniquement.
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-1.5">
-              <label
-                htmlFor="email"
-                className="block font-syne text-[11px] font-semibold tracking-[0.1em] uppercase text-[#6B6560]"
-              >
+              <label htmlFor="email" className="block font-syne text-[11px] font-semibold tracking-[0.1em] uppercase" style={{ color: "var(--text-secondary)" }}>
                 Email
               </label>
               <input
@@ -121,22 +121,15 @@ export default function LoginPage() {
                 placeholder="admin@crm.local"
                 autoComplete="email"
                 required
-                className="w-full px-4 py-2.5 rounded-md font-mono text-sm text-[#1C1917] placeholder:text-[#C4BBB2] outline-none transition-all"
-                style={{
-                  background: "white",
-                  border: "1px solid hsl(36 18% 85%)",
-                  boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
-                }}
-                onFocus={(e) => (e.target.style.borderColor = "#C8541A")}
-                onBlur={(e) => (e.target.style.borderColor = "hsl(36 18% 85%)")}
+                className="w-full px-4 py-2.5 rounded-lg font-mono text-sm placeholder:text-[#3A3A5C] outline-none transition-all"
+                style={inputStyle}
+                onFocus={(e) => (e.target.style.borderColor = "#E05C1A")}
+                onBlur={(e) => (e.target.style.borderColor = "var(--border-card)")}
               />
             </div>
 
             <div className="space-y-1.5">
-              <label
-                htmlFor="password"
-                className="block font-syne text-[11px] font-semibold tracking-[0.1em] uppercase text-[#6B6560]"
-              >
+              <label htmlFor="password" className="block font-syne text-[11px] font-semibold tracking-[0.1em] uppercase" style={{ color: "var(--text-secondary)" }}>
                 Mot de passe
               </label>
               <input
@@ -146,34 +139,27 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 autoComplete="current-password"
                 required
-                className="w-full px-4 py-2.5 rounded-md font-mono text-sm text-[#1C1917] outline-none transition-all"
-                style={{
-                  background: "white",
-                  border: "1px solid hsl(36 18% 85%)",
-                  boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
-                }}
-                onFocus={(e) => (e.target.style.borderColor = "#C8541A")}
-                onBlur={(e) => (e.target.style.borderColor = "hsl(36 18% 85%)")}
+                className="w-full px-4 py-2.5 rounded-lg font-mono text-sm outline-none transition-all"
+                style={inputStyle}
+                onFocus={(e) => (e.target.style.borderColor = "#E05C1A")}
+                onBlur={(e) => (e.target.style.borderColor = "var(--border-card)")}
               />
             </div>
 
             {error && (
-              <div
-                className="px-4 py-3 rounded-md flex items-center gap-2"
-                style={{ background: "#FFF0EC", border: "1px solid #FECDC0" }}
-              >
-                <svg viewBox="0 0 20 20" fill="#C8541A" className="w-4 h-4 shrink-0">
+              <div className="px-4 py-3 rounded-lg flex items-center gap-2" style={{ background: "rgba(224,92,26,0.1)", border: "1px solid rgba(224,92,26,0.25)" }}>
+                <svg viewBox="0 0 20 20" fill="#E05C1A" className="w-4 h-4 shrink-0">
                   <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                 </svg>
-                <p className="font-syne text-[12px] text-[#92400E]">{error}</p>
+                <p className="font-syne text-[12px]" style={{ color: "#F59E60" }}>{error}</p>
               </div>
             )}
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2.5 rounded-md font-syne font-semibold text-[13px] tracking-wide text-white transition-opacity disabled:opacity-60"
-              style={{ background: "#C8541A" }}
+              className="w-full py-2.5 rounded-lg font-syne font-semibold text-[13px] tracking-wide text-white transition-all disabled:opacity-60"
+              style={{ background: "#E05C1A" }}
             >
               {loading ? "Connexion…" : "Se connecter"}
             </button>

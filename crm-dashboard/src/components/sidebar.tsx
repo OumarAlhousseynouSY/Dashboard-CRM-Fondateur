@@ -57,17 +57,7 @@ const NAV_ITEMS = [
   },
 ];
 
-function NavItem({
-  href,
-  label,
-  icon,
-  onClick,
-}: {
-  href: string;
-  label: string;
-  icon: React.ReactNode;
-  onClick?: () => void;
-}) {
+function NavItem({ href, label, icon, onClick }: { href: string; label: string; icon: React.ReactNode; onClick?: () => void }) {
   const pathname = usePathname();
   const active = pathname === href;
 
@@ -75,13 +65,21 @@ function NavItem({
     <Link
       href={href}
       onClick={onClick}
-      className={`relative flex items-center gap-3 px-4 py-2.5 rounded-md text-sm transition-all duration-150 ${
-        active
-          ? "nav-active bg-[#262418] text-white"
-          : "text-[#A8A098] hover:bg-[#1C1B17] hover:text-[#E8E0D4]"
+      className={`relative flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm transition-all duration-150 ${
+        active ? "nav-active text-white" : "hover:text-white"
       }`}
+      style={{
+        background: active ? "var(--sidebar-active)" : "transparent",
+        color: active ? "#fff" : "var(--text-muted)",
+      }}
+      onMouseEnter={(e) => {
+        if (!active) (e.currentTarget as HTMLElement).style.background = "var(--sidebar-hover)";
+      }}
+      onMouseLeave={(e) => {
+        if (!active) (e.currentTarget as HTMLElement).style.background = "transparent";
+      }}
     >
-      <span className={active ? "text-[#C8541A]" : ""}>{icon}</span>
+      <span style={{ color: active ? "#E05C1A" : "inherit" }}>{icon}</span>
       <span className="font-syne tracking-wide text-[13px]">{label}</span>
     </Link>
   );
@@ -90,8 +88,9 @@ function NavItem({
 function Initials({ email }: { email: string }) {
   const initial = email.charAt(0).toUpperCase();
   return (
-    <div className="w-7 h-7 rounded-full bg-[#C8541A]/20 border border-[#C8541A]/40 flex items-center justify-center shrink-0">
-      <span className="text-[11px] font-syne font-semibold text-[#C8541A]">{initial}</span>
+    <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0"
+      style={{ background: "rgba(224,92,26,0.15)", border: "1px solid rgba(224,92,26,0.3)" }}>
+      <span className="text-[11px] font-syne font-semibold" style={{ color: "#E05C1A" }}>{initial}</span>
     </div>
   );
 }
@@ -104,24 +103,19 @@ export default function Sidebar({ email }: { email: string }) {
       className={`fixed md:relative inset-y-0 left-0 z-40 w-[220px] flex flex-col shrink-0 transition-transform duration-200 ease-in-out ${
         open ? "translate-x-0" : "-translate-x-full"
       } md:translate-x-0`}
-      style={{ background: "var(--sidebar-bg)" }}
+      style={{ background: "var(--sidebar-bg)", borderRight: "1px solid var(--sidebar-border)" }}
     >
       {/* Logo */}
       <div className="px-5 py-5 flex items-center justify-between" style={{ borderBottom: "1px solid var(--sidebar-border)" }}>
         <div className="flex items-center gap-2.5">
-          <div className="w-6 h-6 rounded bg-[#C8541A] flex items-center justify-center">
+          <div className="w-6 h-6 rounded-md flex items-center justify-center" style={{ background: "#E05C1A" }}>
             <svg viewBox="0 0 12 12" fill="white" className="w-3.5 h-3.5">
               <path d="M1 9a1 1 0 011-1h1a1 1 0 011 1v1a1 1 0 01-1 1H2a1 1 0 01-1-1V9zM4 6a1 1 0 011-1h1a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V6zM7 3a1 1 0 011-1h1a1 1 0 011 1v7a1 1 0 01-1 1H8a1 1 0 01-1-1V3z" />
             </svg>
           </div>
           <span className="font-syne font-semibold text-white text-[15px] tracking-wide">CRM</span>
         </div>
-        {/* Close button mobile */}
-        <button
-          className="md:hidden text-[#6B6560] hover:text-white p-1 rounded"
-          onClick={() => setOpen(false)}
-          aria-label="Fermer le menu"
-        >
+        <button className="md:hidden p-1 rounded" style={{ color: "var(--text-muted)" }} onClick={() => setOpen(false)}>
           <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
             <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
           </svg>
@@ -130,7 +124,7 @@ export default function Sidebar({ email }: { email: string }) {
 
       {/* Section label */}
       <div className="px-5 pt-5 pb-2">
-        <span className="font-syne text-[10px] font-semibold tracking-[0.12em] uppercase text-[#4A4540]">
+        <span className="font-syne text-[10px] font-semibold tracking-[0.14em] uppercase" style={{ color: "var(--text-dim)" }}>
           Navigation
         </span>
       </div>
@@ -138,13 +132,7 @@ export default function Sidebar({ email }: { email: string }) {
       {/* Nav */}
       <nav className="flex-1 px-3 space-y-0.5">
         {NAV_ITEMS.map((item) => (
-          <NavItem
-            key={item.href}
-            href={item.href}
-            label={item.label}
-            icon={item.icon}
-            onClick={() => setOpen(false)}
-          />
+          <NavItem key={item.href} {...item} onClick={() => setOpen(false)} />
         ))}
       </nav>
 
@@ -152,11 +140,20 @@ export default function Sidebar({ email }: { email: string }) {
       <div className="px-4 py-4" style={{ borderTop: "1px solid var(--sidebar-border)" }}>
         <div className="flex items-center gap-3 mb-3">
           <Initials email={email} />
-          <span className="text-[#6B6560] text-[11px] truncate font-mono">{email}</span>
+          <span className="text-[11px] truncate font-mono" style={{ color: "var(--text-muted)" }}>{email}</span>
         </div>
         <button
           onClick={() => signOut({ callbackUrl: "/login" })}
-          className="w-full flex items-center gap-2 px-3 py-2 rounded-md text-[#6B6560] hover:text-[#E8E0D4] hover:bg-[#1C1B17] transition-colors text-[12px] font-syne"
+          className="w-full flex items-center gap-2 px-3 py-2 rounded-lg transition-colors text-[12px] font-syne"
+          style={{ color: "var(--text-muted)" }}
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLElement).style.background = "var(--sidebar-hover)";
+            (e.currentTarget as HTMLElement).style.color = "#E2E2F0";
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLElement).style.background = "transparent";
+            (e.currentTarget as HTMLElement).style.color = "var(--text-muted)";
+          }}
         >
           <svg viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5">
             <path fillRule="evenodd" d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -169,27 +166,18 @@ export default function Sidebar({ email }: { email: string }) {
 
   return (
     <>
-      {/* Hamburger — mobile only */}
       <button
-        className={`md:hidden fixed top-4 left-4 z-50 p-2.5 rounded-lg text-white shadow-lg transition-opacity ${
-          open ? "opacity-0 pointer-events-none" : "opacity-100"
-        }`}
-        style={{ background: "var(--sidebar-bg)" }}
+        className={`md:hidden fixed top-4 left-4 z-50 p-2.5 rounded-lg text-white shadow-lg transition-opacity ${open ? "opacity-0 pointer-events-none" : "opacity-100"}`}
+        style={{ background: "var(--sidebar-bg)", border: "1px solid var(--sidebar-border)" }}
         onClick={() => setOpen(true)}
-        aria-label="Ouvrir le menu"
       >
         <svg viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
           <path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
         </svg>
       </button>
 
-      {/* Overlay */}
       {open && (
-        <div
-          className="md:hidden fixed inset-0 bg-black/50 z-30 backdrop-blur-sm"
-          onClick={() => setOpen(false)}
-          aria-hidden="true"
-        />
+        <div className="md:hidden fixed inset-0 bg-black/70 z-30 backdrop-blur-sm" onClick={() => setOpen(false)} />
       )}
 
       {sidebarContent}

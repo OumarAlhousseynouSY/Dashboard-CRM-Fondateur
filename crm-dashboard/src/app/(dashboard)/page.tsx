@@ -10,28 +10,32 @@ const KPI_CONFIG = [
     title: "CA Sécurisé",
     subtitle: "Deals gagnés · en cours",
     borderClass: "kpi-border-emerald",
-    valueColor: "#059669",
+    valueColor: "#10B981",
+    glow: "rgba(16,185,129,0.08)",
   },
   {
     key: "pipelineBrut" as const,
     title: "Pipeline Brut",
     subtitle: "Prospect · Qualifié · Négociation",
     borderClass: "kpi-border-blue",
-    valueColor: "#1D4ED8",
+    valueColor: "#3B82F6",
+    glow: "rgba(59,130,246,0.08)",
   },
   {
     key: "pipelinePondere" as const,
     title: "Pipeline Pondéré",
     subtitle: "10 % · 35 % · 70 %",
     borderClass: "kpi-border-violet",
-    valueColor: "#7C3AED",
+    valueColor: "#8B5CF6",
+    glow: "rgba(139,92,246,0.08)",
   },
   {
     key: "volumeActifs" as const,
     title: "Deals Actifs",
     subtitle: "En cours de conversion",
     borderClass: "kpi-border-sky",
-    valueColor: "#0284C7",
+    valueColor: "#38BDF8",
+    glow: "rgba(56,189,248,0.08)",
     isCount: true,
   },
   {
@@ -39,7 +43,8 @@ const KPI_CONFIG = [
     title: "Panier Moyen",
     subtitle: "Tous statuts confondus",
     borderClass: "kpi-border-orange",
-    valueColor: "#C8541A",
+    valueColor: "#E05C1A",
+    glow: "rgba(224,92,26,0.08)",
   },
 ];
 
@@ -82,18 +87,16 @@ export default async function DashboardPage() {
       {/* Header */}
       <div className="flex items-end justify-between">
         <div>
-          <p className="font-syne text-[11px] font-semibold tracking-[0.14em] uppercase text-[#9B9085] mb-1.5">
+          <p className="font-syne text-[11px] font-semibold tracking-[0.14em] uppercase mb-1.5" style={{ color: "var(--text-muted)" }}>
             Vue d'ensemble
           </p>
-          <h1 className="font-syne font-bold text-2xl text-[#1C1917] tracking-tight">
+          <h1 className="font-syne font-bold text-2xl tracking-tight" style={{ color: "var(--text-primary)" }}>
             Indicateurs clés
           </h1>
         </div>
-        <div className="text-right">
-          <span className="font-mono text-xs text-[#9B9085]">
-            {deals.length} deal{deals.length !== 1 ? "s" : ""} en base
-          </span>
-        </div>
+        <span className="font-mono text-xs" style={{ color: "var(--text-muted)" }}>
+          {deals.length} deal{deals.length !== 1 ? "s" : ""} en base
+        </span>
       </div>
 
       {/* KPI Grid */}
@@ -107,10 +110,14 @@ export default async function DashboardPage() {
           return (
             <div
               key={cfg.key}
-              className={`bg-white rounded-lg p-5 ${cfg.borderClass}`}
-              style={{ border: "1px solid hsl(36 18% 88%)" }}
+              className={`rounded-xl p-5 ${cfg.borderClass}`}
+              style={{
+                background: "var(--bg-card)",
+                border: "1px solid var(--border-card)",
+                boxShadow: `0 4px 24px ${cfg.glow}`,
+              }}
             >
-              <p className="font-syne text-[10px] font-semibold tracking-[0.12em] uppercase text-[#9B9085] mb-3">
+              <p className="font-syne text-[10px] font-semibold tracking-[0.12em] uppercase mb-3" style={{ color: "var(--text-muted)" }}>
                 {cfg.title}
               </p>
               <p
@@ -119,7 +126,7 @@ export default async function DashboardPage() {
               >
                 {displayValue}
               </p>
-              <p className="text-[11px] text-[#B0A89E]">{cfg.subtitle}</p>
+              <p className="text-[11px]" style={{ color: "var(--text-dim)" }}>{cfg.subtitle}</p>
             </div>
           );
         })}
@@ -128,41 +135,41 @@ export default async function DashboardPage() {
       {/* Pipeline breakdown bar */}
       {pipelineTotal > 0 && (
         <div
-          className="bg-white rounded-lg p-5"
-          style={{ border: "1px solid hsl(36 18% 88%)" }}
+          className="rounded-xl p-5"
+          style={{ background: "var(--bg-card)", border: "1px solid var(--border-card)" }}
         >
-          <p className="font-syne text-[10px] font-semibold tracking-[0.12em] uppercase text-[#9B9085] mb-4">
+          <p className="font-syne text-[10px] font-semibold tracking-[0.12em] uppercase mb-4" style={{ color: "var(--text-muted)" }}>
             Répartition du chiffre d'affaires
           </p>
           <div className="flex gap-4 mb-3">
             <div>
-              <span className="font-mono text-xs text-[#059669]">
+              <span className="font-mono text-xs" style={{ color: "#10B981" }}>
                 {caRatio.toFixed(0)}%
               </span>
-              <span className="text-xs text-[#9B9085] ml-1">sécurisé</span>
+              <span className="text-xs ml-1" style={{ color: "var(--text-muted)" }}>sécurisé</span>
             </div>
             <div>
-              <span className="font-mono text-xs text-[#1D4ED8]">
+              <span className="font-mono text-xs" style={{ color: "#3B82F6" }}>
                 {(100 - caRatio).toFixed(0)}%
               </span>
-              <span className="text-xs text-[#9B9085] ml-1">pipeline actif</span>
+              <span className="text-xs ml-1" style={{ color: "var(--text-muted)" }}>pipeline actif</span>
             </div>
           </div>
-          <div className="h-2 rounded-full overflow-hidden bg-[#F0EDE6] flex">
+          <div className="h-2 rounded-full overflow-hidden flex" style={{ background: "var(--border-subtle)" }}>
             <div
               className="h-full rounded-full transition-all"
-              style={{ width: `${caRatio}%`, background: "#059669" }}
+              style={{ width: `${caRatio}%`, background: "#10B981" }}
             />
             <div
               className="h-full flex-1 rounded-r-full"
-              style={{ background: "#DBEAFE" }}
+              style={{ background: "rgba(59,130,246,0.25)" }}
             />
           </div>
           <div className="flex justify-between mt-2">
-            <span className="font-mono text-[11px] text-[#9B9085]">
+            <span className="font-mono text-[11px]" style={{ color: "var(--text-muted)" }}>
               {formatEur(kpis.caSecurise)}
             </span>
-            <span className="font-mono text-[11px] text-[#9B9085]">
+            <span className="font-mono text-[11px]" style={{ color: "var(--text-muted)" }}>
               {formatEur(pipelineTotal)}
             </span>
           </div>
@@ -174,18 +181,18 @@ export default async function DashboardPage() {
 
       {/* À relancer */}
       <div
-        className="rounded-lg p-5 flex flex-col sm:flex-row sm:items-center gap-6"
+        className="rounded-xl p-5 flex flex-col sm:flex-row sm:items-center gap-6"
         style={{
-          background: "#FFF8F2",
-          border: "1px solid #FDDCBF",
-          borderLeft: "3px solid #C8541A",
+          background: "rgba(224,92,26,0.06)",
+          border: "1px solid rgba(224,92,26,0.2)",
+          borderLeft: "3px solid #E05C1A",
         }}
       >
         <div className="flex-1">
-          <p className="font-syne text-[10px] font-semibold tracking-[0.12em] uppercase text-[#C8541A]/70 mb-1">
+          <p className="font-syne text-[10px] font-semibold tracking-[0.12em] uppercase mb-1" style={{ color: "rgba(224,92,26,0.7)" }}>
             À Relancer
           </p>
-          <p className="text-sm text-[#92400E]">
+          <p className="text-sm" style={{ color: "#F59E60" }}>
             {kpis.aRelancerCount === 0
               ? "Aucun deal en attente de relance."
               : `${kpis.aRelancerCount} deal${kpis.aRelancerCount > 1 ? "s" : ""} nécessitent une relance.`}
@@ -193,18 +200,18 @@ export default async function DashboardPage() {
         </div>
         <div className="flex gap-8 shrink-0">
           <div>
-            <p className="font-syne text-[10px] font-semibold tracking-widest uppercase text-[#C8541A]/60 mb-1">
+            <p className="font-syne text-[10px] font-semibold tracking-widest uppercase mb-1" style={{ color: "rgba(224,92,26,0.6)" }}>
               Deals
             </p>
-            <p className="font-mono text-2xl font-medium text-[#C8541A]">
+            <p className="font-mono text-2xl font-medium" style={{ color: "#E05C1A" }}>
               {kpis.aRelancerCount}
             </p>
           </div>
           <div>
-            <p className="font-syne text-[10px] font-semibold tracking-widest uppercase text-[#C8541A]/60 mb-1">
+            <p className="font-syne text-[10px] font-semibold tracking-widest uppercase mb-1" style={{ color: "rgba(224,92,26,0.6)" }}>
               Montant
             </p>
-            <p className="font-mono text-2xl font-medium text-[#C8541A]">
+            <p className="font-mono text-2xl font-medium" style={{ color: "#E05C1A" }}>
               {formatEur(kpis.aRelancerAmount)}
             </p>
           </div>

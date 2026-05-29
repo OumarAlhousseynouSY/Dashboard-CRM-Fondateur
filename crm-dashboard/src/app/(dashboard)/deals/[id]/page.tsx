@@ -4,47 +4,33 @@ import Link from "next/link";
 import { formatEur } from "@/lib/pipeline";
 
 const STATUS_STYLES: Record<string, { bg: string; text: string; border: string; label: string }> = {
-  "gagné - en cours": { bg: "#F0FDF4", text: "#166534", border: "#BBF7D0", label: "Gagné" },
-  "prospect":         { bg: "#EFF6FF", text: "#1D40AF", border: "#BFDBFE", label: "Prospect" },
-  "qualifié":         { bg: "#F5F3FF", text: "#5B21B6", border: "#DDD6FE", label: "Qualifié" },
-  "négociation":      { bg: "#FFF7ED", text: "#9A3412", border: "#FED7AA", label: "Négociation" },
-  "à relancer":       { bg: "#FFF8F2", text: "#C8541A", border: "#FDDCBF", label: "À Relancer" },
+  "gagné - en cours": { bg: "rgba(16,185,129,0.1)",  text: "#10B981", border: "rgba(16,185,129,0.25)",  label: "Gagné" },
+  "prospect":         { bg: "rgba(59,130,246,0.1)",   text: "#3B82F6", border: "rgba(59,130,246,0.25)",   label: "Prospect" },
+  "qualifié":         { bg: "rgba(139,92,246,0.1)",   text: "#8B5CF6", border: "rgba(139,92,246,0.25)",   label: "Qualifié" },
+  "négociation":      { bg: "rgba(99,102,241,0.1)",   text: "#6366F1", border: "rgba(99,102,241,0.25)",   label: "Négociation" },
+  "à relancer":       { bg: "rgba(224,92,26,0.1)",    text: "#E05C1A", border: "rgba(224,92,26,0.25)",    label: "À Relancer" },
 };
 
 const PRIORITY_STYLES: Record<string, { text: string; label: string }> = {
-  high:   { text: "#DC2626", label: "Haute" },
-  medium: { text: "#D97706", label: "Moyenne" },
-  low:    { text: "#6B7280", label: "Basse" },
+  high:   { text: "#EF4444", label: "Haute" },
+  medium: { text: "#F59E0B", label: "Moyenne" },
+  low:    { text: "#55557A", label: "Basse" },
 };
 
 function formatDate(d: Date | null): string {
   if (!d) return "—";
-  return new Date(d).toLocaleDateString("fr-FR", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  });
+  return new Date(d).toLocaleDateString("fr-FR", { day: "2-digit", month: "2-digit", year: "numeric" });
 }
 
-function MetaItem({
-  label,
-  value,
-  mono = false,
-  color,
-}: {
-  label: string;
-  value: string;
-  mono?: boolean;
-  color?: string;
-}) {
+function MetaItem({ label, value, mono = false, color }: { label: string; value: string; mono?: boolean; color?: string }) {
   return (
     <div>
-      <p className="font-syne text-[10px] font-semibold tracking-[0.1em] uppercase text-[#B0A89E] mb-0.5">
+      <p className="font-syne text-[10px] font-semibold tracking-[0.1em] uppercase mb-0.5" style={{ color: "var(--text-muted)" }}>
         {label}
       </p>
       <p
-        className={`${mono ? "font-mono text-[13px]" : "text-[14px]"} text-[#1C1917]`}
-        style={color ? { color } : undefined}
+        className={`${mono ? "font-mono text-[13px]" : "text-[14px]"}`}
+        style={{ color: color ?? "var(--text-primary)" }}
       >
         {value}
       </p>
@@ -52,44 +38,25 @@ function MetaItem({
   );
 }
 
-export default async function DealDetailPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+export default async function DealDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const deal = await prisma.deal.findUnique({
-    where: { id },
-    include: { tags: true },
-  });
-
+  const deal = await prisma.deal.findUnique({ where: { id }, include: { tags: true } });
   if (!deal) notFound();
 
-  const statusStyle =
-    STATUS_STYLES[deal.status] ?? {
-      bg: "#F9FAFB",
-      text: "#6B7280",
-      border: "#E5E7EB",
-      label: deal.status,
-    };
-  const priorityStyle =
-    PRIORITY_STYLES[deal.priority] ?? { text: "#6B7280", label: deal.priority };
+  const statusStyle = STATUS_STYLES[deal.status] ?? { bg: "var(--bg-section)", text: "var(--text-muted)", border: "var(--border-card)", label: deal.status };
+  const priorityStyle = PRIORITY_STYLES[deal.priority] ?? { text: "var(--text-muted)", label: deal.priority };
 
   return (
     <div className="space-y-6 max-w-2xl">
       {/* Back link */}
       <Link
         href="/commerciaux"
-        className="inline-flex items-center gap-1.5 font-syne text-[11px] font-semibold tracking-[0.12em] uppercase text-[#9B9085] hover:text-[#C8541A] transition-colors"
+        className="inline-flex items-center gap-1.5 font-syne text-[11px] font-semibold tracking-[0.12em] uppercase transition-colors"
+        style={{ color: "var(--text-muted)" }}
+        onMouseEnter={() => {}} /* hover handled via CSS */
       >
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-          <path
-            d="M8.75 10.5L5.25 7l3.5-3.5"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
+          <path d="M8.75 10.5L5.25 7l3.5-3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
         Commerciaux
       </Link>
@@ -97,56 +64,42 @@ export default async function DealDetailPage({
       {/* Header */}
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="font-syne text-[11px] font-semibold tracking-[0.14em] uppercase text-[#9B9085] mb-1.5">
+          <p className="font-syne text-[11px] font-semibold tracking-[0.14em] uppercase mb-1.5" style={{ color: "var(--text-muted)" }}>
             Détail du deal
           </p>
-          <h1 className="font-syne font-bold text-2xl text-[#1C1917] tracking-tight leading-snug">
+          <h1 className="font-syne font-bold text-2xl tracking-tight leading-snug" style={{ color: "var(--text-primary)" }}>
             {deal.name}
           </h1>
-          <p className="font-mono text-[11px] text-[#B0A89E] mt-1">
+          <p className="font-mono text-[11px] mt-1" style={{ color: "var(--text-dim)" }}>
             #{deal.id.slice(0, 8)}
           </p>
         </div>
         <span
           className="shrink-0 font-syne text-[11px] font-semibold tracking-wider uppercase px-3 py-1.5 rounded-full mt-7"
-          style={{
-            background: statusStyle.bg,
-            color: statusStyle.text,
-            border: `1px solid ${statusStyle.border}`,
-          }}
+          style={{ background: statusStyle.bg, color: statusStyle.text, border: `1px solid ${statusStyle.border}` }}
         >
           {statusStyle.label}
         </span>
       </div>
 
       {/* Amount */}
-      <div
-        className="bg-white rounded-lg p-5 kpi-border-orange"
-        style={{ border: "1px solid hsl(36 18% 88%)" }}
-      >
-        <p className="font-syne text-[10px] font-semibold tracking-[0.12em] uppercase text-[#9B9085] mb-2">
+      <div className="rounded-xl p-5 kpi-border-orange" style={{ background: "var(--bg-card)", border: "1px solid var(--border-card)", boxShadow: "0 4px 24px rgba(224,92,26,0.08)" }}>
+        <p className="font-syne text-[10px] font-semibold tracking-[0.12em] uppercase mb-2" style={{ color: "var(--text-muted)" }}>
           Montant
         </p>
-        <p className="font-mono text-[32px] font-medium text-[#C8541A] leading-none">
+        <p className="font-mono text-[32px] font-medium leading-none" style={{ color: "#E05C1A" }}>
           {formatEur(deal.amount)}
         </p>
       </div>
 
       {/* Metadata grid */}
-      <div
-        className="bg-white rounded-lg p-5"
-        style={{ border: "1px solid hsl(36 18% 88%)" }}
-      >
-        <p className="font-syne text-[10px] font-semibold tracking-[0.12em] uppercase text-[#9B9085] mb-4">
+      <div className="rounded-xl p-5" style={{ background: "var(--bg-card)", border: "1px solid var(--border-card)" }}>
+        <p className="font-syne text-[10px] font-semibold tracking-[0.12em] uppercase mb-4" style={{ color: "var(--text-muted)" }}>
           Informations
         </p>
         <div className="grid grid-cols-2 gap-x-8 gap-y-4">
           <MetaItem label="Commercial" value={deal.assignee || "—"} />
-          <MetaItem
-            label="Priorité"
-            value={priorityStyle.label}
-            color={priorityStyle.text}
-          />
+          <MetaItem label="Priorité" value={priorityStyle.label} color={priorityStyle.text} />
           <MetaItem label="Date de création" value={formatDate(deal.dateCreated)} mono />
           <MetaItem label="Échéance" value={formatDate(deal.dueDate)} mono />
           <MetaItem label="Date de démarrage" value={formatDate(deal.startDate)} mono />
@@ -156,23 +109,16 @@ export default async function DealDetailPage({
 
       {/* Tags */}
       {deal.tags.length > 0 && (
-        <div
-          className="bg-white rounded-lg p-5"
-          style={{ border: "1px solid hsl(36 18% 88%)" }}
-        >
-          <p className="font-syne text-[10px] font-semibold tracking-[0.12em] uppercase text-[#9B9085] mb-3">
+        <div className="rounded-xl p-5" style={{ background: "var(--bg-card)", border: "1px solid var(--border-card)" }}>
+          <p className="font-syne text-[10px] font-semibold tracking-[0.12em] uppercase mb-3" style={{ color: "var(--text-muted)" }}>
             Secteurs
           </p>
           <div className="flex flex-wrap gap-2">
             {deal.tags.map((t) => (
               <span
                 key={t.id}
-                className="font-syne text-[11px] font-medium tracking-wide px-2.5 py-1 rounded"
-                style={{
-                  background: "hsl(44 15% 93%)",
-                  color: "#6B6560",
-                  border: "1px solid hsl(36 18% 88%)",
-                }}
+                className="font-syne text-[11px] font-medium tracking-wide px-2.5 py-1 rounded-md"
+                style={{ background: "var(--bg-section)", color: "var(--text-secondary)", border: "1px solid var(--border-subtle)" }}
               >
                 {t.tag}
               </span>
@@ -183,14 +129,11 @@ export default async function DealDetailPage({
 
       {/* Content / Notes */}
       {deal.content && (
-        <div
-          className="bg-white rounded-lg p-5"
-          style={{ border: "1px solid hsl(36 18% 88%)" }}
-        >
-          <p className="font-syne text-[10px] font-semibold tracking-[0.12em] uppercase text-[#9B9085] mb-3">
+        <div className="rounded-xl p-5" style={{ background: "var(--bg-card)", border: "1px solid var(--border-card)" }}>
+          <p className="font-syne text-[10px] font-semibold tracking-[0.12em] uppercase mb-3" style={{ color: "var(--text-muted)" }}>
             Notes
           </p>
-          <p className="text-sm text-[#44403C] leading-relaxed">{deal.content}</p>
+          <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>{deal.content}</p>
         </div>
       )}
     </div>
